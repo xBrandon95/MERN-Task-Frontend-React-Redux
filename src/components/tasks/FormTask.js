@@ -1,4 +1,11 @@
+import { useSelector } from 'react-redux';
+
 const FormTask = () => {
+  // get state active project
+  const { activeProject } = useSelector(state => state.projects);
+
+  if (!activeProject) return null;
+
   return (
     <div className="form">
       <form>

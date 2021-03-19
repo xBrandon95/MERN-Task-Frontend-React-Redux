@@ -240,7 +240,7 @@ aside {
   font-weight: 900;
   font-family: var(--textFont);
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.8rem;
   border-radius: 0.5rem;
   cursor: pointer;
   border: none;
@@ -265,7 +265,7 @@ aside {
 .error {
   max-width: 600px;
   margin: 2rem auto 0 auto;
-  background-color: rgb(170, 0, 0);
+  background-color: var(--red);
   color: var(--white);
 }
 
