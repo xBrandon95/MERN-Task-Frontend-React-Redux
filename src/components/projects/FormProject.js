@@ -5,6 +5,7 @@ import {
   showFormAction,
   errorFormAction,
 } from '../../redux/actions/projectActions';
+import { resetTaskAction } from '../../redux/actions/taskActions';
 
 const FormProject = () => {
   // hook useForm get form data
@@ -32,6 +33,7 @@ const FormProject = () => {
 
     // Add State
     dispatch(addProjectAction(project));
+    dispatch(resetTaskAction());
     // Reset Form
     reset();
   };

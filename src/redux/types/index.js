@@ -1,3 +1,4 @@
+// Types Projects
 export const SHOW_FORM = 'SHOW_FORM';
 
 export const GET_PROJECTS = 'GET_PROJECTS';
@@ -15,3 +16,27 @@ export const DELETE_PROJECT_ERROR = 'DELETE_PROJECT_ERROR';
 export const VALIDATE_FORM = 'VALIDATE_FORM';
 
 export const ACTUAL_PROJECT = 'ACTUAL_PROJECT';
+
+// Types Tasks
+export const GET_TASKS = 'GET_TASKS';
+export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
+export const GET_TASKS_ERROR = 'GET_TASKS_ERROR';
+
+export const ADD_TASK = 'ADD_TASK';
+export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
+export const ADD_TASK_ERROR = 'ADD_TASK_ERROR';
+
+export const UPDATE_TASK = 'UPDATE_TASK';
+export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
+export const UPDATE_TASK_ERROR = 'UPDATE_TASK_ERROR';
+
+export const DELETE_TASK = 'DELETE_TASK';
+export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
+export const DELETE_TASK_ERROR = 'DELETE_TASK_ERROR';
+
+export const VALIDATE_FORM_TASK = 'VALIDATE_FORM_TASK';
+export const RESET_TASKS = 'RESET_TASKS';
+export const CHANGE_STATE_TASK = 'CHANGE_STATE_TASK';
+export const ACTUAL_TASK = 'ACTUAL_TASK';
+export const RESET_ACTUAL_TASK = 'RESET_ACTUAL_TASK';
+export const RESET_FORM_TASK = 'RESET_FORM_TASK';

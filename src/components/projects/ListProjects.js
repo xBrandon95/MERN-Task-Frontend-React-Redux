@@ -1,3 +1,5 @@
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProjectsAction } from '../../redux/actions/projectActions';
@@ -17,9 +19,17 @@ const ListProjects = () => {
     <>
       {projects.length !== 0 ? (
         <ul className="list-projects">
-          {projects.map(project => (
-            <ProjectItem key={project.id} project={project} />
-          ))}
+          <TransitionGroup>
+            {projects.map(project => (
+              <CSSTransition
+                key={project.id}
+                timeout={250}
+                classNames="project"
+              >
+                <ProjectItem project={project} />
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
         </ul>
       ) : (
         <p>No hay proyectos, comienza agregando uno.</p>

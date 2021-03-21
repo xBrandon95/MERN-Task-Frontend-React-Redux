@@ -95,7 +95,6 @@ a {
 .btn-delete {
   background-color: var(--red);
   color: white;
-  font-weight: bold;
   margin: 0.6rem 0;
 }
 
@@ -204,6 +203,14 @@ aside {
   background-color: var(--white);
   padding: 0.5rem 2rem;
   align-items: center;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+}
+
+.task-center {
+  text-align: center;
+  background-color: var(--white);
+  padding: 0.5rem 2rem;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
 }
