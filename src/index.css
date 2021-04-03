@@ -358,6 +358,7 @@ aside {
   font-size: 2.2rem;
   text-align: center;
   width: 100%;
+  color: white !important;
 }
 @media (min-width: 768px) {
   .alert {

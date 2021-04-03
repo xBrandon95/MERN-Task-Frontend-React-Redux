@@ -40,3 +40,8 @@ export const CHANGE_STATE_TASK = 'CHANGE_STATE_TASK';
 export const ACTUAL_TASK = 'ACTUAL_TASK';
 export const RESET_ACTUAL_TASK = 'RESET_ACTUAL_TASK';
 export const RESET_FORM_TASK = 'RESET_FORM_TASK';
+
+// Types Alert
+
+export const SHOW_ALERT = 'SHOW_ALERT';
+export const HIDE_ALERT = 'HIDE_ALERT';
