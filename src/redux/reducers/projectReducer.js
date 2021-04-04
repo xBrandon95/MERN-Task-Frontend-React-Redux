@@ -19,7 +19,7 @@ const initialState = {
   loading: false,
   errorForm: false,
   activeProject: null,
-  error: false,
+  message: null,
 };
 
 const projectReducer = (state = initialState, action) => {
@@ -36,7 +36,7 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: false,
+        message: null,
         errorForm: false,
         newProject: false,
       };
@@ -52,7 +52,7 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        projects: [...state.projects, action.payload],
+        projects: [action.payload, ...state.projects],
         newProject: false,
       };
 
@@ -61,7 +61,7 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         projects: state.projects.filter(
-          project => project.id !== action.payload,
+          project => project._id !== action.payload,
         ),
         activeProject: null,
       };
@@ -73,7 +73,7 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         newProject: false,
-        error: action.payload,
+        message: action.payload,
       };
 
     case VALIDATE_FORM:

@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import shortid from 'shortid';
-
+import clientAxios from '../../config/axios';
 import {
   SHOW_FORM,
   GET_PROJECTS,
@@ -31,26 +29,24 @@ const getProjectsSuccess = projects => ({
   payload: projects,
 });
 
-const getProjectsError = () => ({
+const getProjectsError = alert => ({
   type: GET_PROJECTS_ERROR,
-  payload: true,
+  payload: alert,
 });
 
 export const getAllProjectsAction = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(getProjects());
 
     try {
-      const projects = [
-        { id: 1, name: 'Tienda Virtual' },
-        { id: 2, name: 'Intranet' },
-        { id: 3, name: 'Desarrollo Web' },
-      ];
-
-      dispatch(getProjectsSuccess(projects));
+      const res = await clientAxios.get('/api/projects');
+      dispatch(getProjectsSuccess(res.data));
     } catch (error) {
-      console.log(error);
-      dispatch(getProjectsError());
+      const alert = {
+        msg: 'Hubo un error',
+        category: 'alert-error',
+      };
+      dispatch(getProjectsError(alert));
     }
   };
 };
@@ -62,7 +58,6 @@ export const actualProjectAction = project => ({
 });
 
 // Actions - Add Project
-
 const addProject = () => ({
   type: ADD_PROJECT,
 });
@@ -72,23 +67,24 @@ const addProjectSuccess = project => ({
   payload: project,
 });
 
-const addProjectError = () => ({
+const addProjectError = alert => ({
   type: ADD_PROJECT_ERROR,
-  payload: true,
+  payload: alert,
 });
 
 export const addProjectAction = project => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(addProject());
-
-    const newProject = { id: shortid.generate(), ...project };
-
     try {
-      dispatch(addProjectSuccess(newProject));
-      dispatch(actualProjectAction(newProject));
+      const res = await clientAxios.post('/api/projects', project);
+      dispatch(addProjectSuccess(res.data));
+      dispatch(actualProjectAction(project));
     } catch (error) {
-      console.log(error);
-      dispatch(addProjectError());
+      const alert = {
+        msg: 'Hubo un error',
+        category: 'alert-error',
+      };
+      dispatch(addProjectError(alert));
     }
   };
 };
@@ -109,20 +105,24 @@ const deleteProjectSuccess = idProject => ({
   payload: idProject,
 });
 
-const deleteProjectError = () => ({
+const deleteProjectError = alert => ({
   type: DELETE_PROJECT_ERROR,
-  payload: true,
+  payload: alert,
 });
 
 export const deleteProjectAction = idProject => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(deleteProject());
 
     try {
+      await clientAxios.delete(`/api/projects/${idProject}`);
       dispatch(deleteProjectSuccess(idProject));
     } catch (error) {
-      console.log(error);
-      dispatch(deleteProjectError());
+      const alert = {
+        msg: 'Hubo un error',
+        category: 'alert-error',
+      };
+      dispatch(deleteProjectError(alert));
     }
   };
 };

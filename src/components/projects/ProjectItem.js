@@ -13,7 +13,7 @@ const ProjectItem = ({ project = {} }) => {
   const selectedProject = actProject => {
     dispatch(actualProjectAction(actProject));
     // filter tasks
-    dispatch(getAllTasksAction(actProject.id));
+    dispatch(getAllTasksAction(actProject._id));
     // reset actual task
     dispatch(resetActualTaskAction());
     // reset form task
