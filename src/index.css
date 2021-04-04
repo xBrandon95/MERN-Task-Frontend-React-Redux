@@ -98,6 +98,10 @@ a {
   margin: 0.6rem 0;
 }
 
+.text-white {
+  color: white !important;
+}
+
 @media (min-width: 768px) {
   .container-app {
     display: flex;

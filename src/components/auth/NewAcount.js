@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
 import showAlertAction from '../../redux/actions/alertActions';
+import { registerUserAction } from '../../redux/actions/authActions';
 
 const NewAcount = () => {
   // hook get form data
-  const [user, handleInputChange] = useForm({
+  const [user, handleInputChange, reset] = useForm({
     name: '',
     email: '',
     password: '',
@@ -14,16 +16,30 @@ const NewAcount = () => {
 
   const { name, email, password, confirmPass } = user;
 
+  // get state alert
+  const { message, auth } = useSelector(state => state.auth);
+  const { alert } = useSelector(state => state.alert);
+
   // Dispatch
   const dispatch = useDispatch();
 
-  // get state alert
-  const { alert } = useSelector(state => state.alert);
+  // history
+  const history = useHistory();
+
+  // in case the user has authenticated or registered or duplicated
+  useEffect(() => {
+    if (auth) {
+      history.push('/proyectos');
+    }
+
+    if (message) {
+      dispatch(showAlertAction(message.msg, message.category));
+    }
+  }, [message, auth, history]);
 
   // when user sign in
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(user);
 
     // Validate
     if (
@@ -58,13 +74,22 @@ const NewAcount = () => {
     }
 
     // Execute the action
+    dispatch(
+      registerUserAction({
+        name,
+        email,
+        password,
+      }),
+    );
+
+    reset();
   };
 
   return (
     <div className="form-user">
       {alert && <div className={`alert ${alert.category}`}>{alert.msg}</div>}
       <div className="container-form shadow-dark">
-        <h1>Iniciar Sesión</h1>
+        <h1>Obtener Cuenta</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="field-form">

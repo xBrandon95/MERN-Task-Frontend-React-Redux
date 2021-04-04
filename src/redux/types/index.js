@@ -42,6 +42,13 @@ export const RESET_ACTUAL_TASK = 'RESET_ACTUAL_TASK';
 export const RESET_FORM_TASK = 'RESET_FORM_TASK';
 
 // Types Alert
-
 export const SHOW_ALERT = 'SHOW_ALERT';
 export const HIDE_ALERT = 'HIDE_ALERT';
+
+// AUTH
+export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
+export const REGISTRATION_ERROR = 'REGISTRATION_ERROR';
+export const GET_USER = 'GET_USER';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGOUT = 'LOGOUT';

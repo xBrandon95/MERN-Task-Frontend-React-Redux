@@ -1,5 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
+import showAlertAction from '../../redux/actions/alertActions';
+import { loginAction } from '../../redux/actions/authActions';
 
 const Login = () => {
   // hook get form data
@@ -8,19 +12,55 @@ const Login = () => {
     password: '',
   });
 
+  // extract email and password
   const { email, password } = user;
+
+  // get state alert
+  const { message, auth } = useSelector(state => state.auth);
+  const { alert } = useSelector(state => state.alert);
+
+  // Dispatch
+  const dispatch = useDispatch();
+
+  // history
+  const history = useHistory();
+
+  // in case the user or password no exists
+  useEffect(() => {
+    if (auth) {
+      history.push('/proyectos');
+    }
+
+    if (message) {
+      dispatch(showAlertAction(message.msg, message.category));
+    }
+  }, [message, auth, history]);
 
   // when user logs in
   const handleSubmit = e => {
     e.preventDefault();
 
     // Validate
+    if (email.trim() === '' || password.trim() === '') {
+      dispatch(
+        showAlertAction('Todos los campos son obligatorios', 'alert-error'),
+      );
+      // eslint-disable-next-line no-useless-return
+      return;
+    }
 
     // Execute the action
+    dispatch(
+      loginAction({
+        email,
+        password,
+      }),
+    );
   };
 
   return (
     <div className="form-user">
+      {alert && <div className={`alert ${alert.category}`}>{alert.msg}</div>}
       <div className="container-form shadow-dark">
         <h1>Iniciar Sesión</h1>
 
