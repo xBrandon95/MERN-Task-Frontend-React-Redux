@@ -11,6 +11,7 @@ import {
   DELETE_PROJECT,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_ERROR,
+  LOGOUT_PROJECT,
 } from '../types';
 
 const initialState = {
@@ -88,6 +89,17 @@ const projectReducer = (state = initialState, action) => {
         activeProject: action.payload,
         errorForm: false,
         newProject: false,
+      };
+
+    case LOGOUT_PROJECT:
+      return {
+        ...state,
+        newProject: false,
+        projects: [],
+        loading: false,
+        errorForm: false,
+        activeProject: null,
+        message: null,
       };
 
     default:

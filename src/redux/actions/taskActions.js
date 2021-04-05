@@ -17,6 +17,7 @@ import {
   UPDATE_TASK_ERROR,
   RESET_ACTUAL_TASK,
   RESET_FORM_TASK,
+  LOGOUT_TASK,
 } from '../types';
 
 // Actions - Get All Proyects
@@ -158,4 +159,9 @@ export const resetActualTaskAction = () => ({
 // reset actual task
 export const resetFormTaskAction = () => ({
   type: RESET_FORM_TASK,
+});
+
+// logout task
+export const logoutTask = () => ({
+  type: LOGOUT_TASK,
 });

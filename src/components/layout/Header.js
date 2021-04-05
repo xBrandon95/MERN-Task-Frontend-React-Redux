@@ -4,6 +4,8 @@ import {
   logoutAction,
   userAuthenticated,
 } from '../../redux/actions/authActions';
+import { logoutProject } from '../../redux/actions/projectActions';
+import { logoutTask } from '../../redux/actions/taskActions';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,12 @@ const Header = () => {
   useEffect(() => {
     dispatch(userAuthenticated());
   }, []);
+
+  const clickLogout = () => {
+    dispatch(logoutAction());
+    dispatch(logoutProject());
+    dispatch(logoutTask());
+  };
 
   return (
     <header className="app-header">
@@ -24,7 +32,7 @@ const Header = () => {
         <button
           type="button"
           className="btn btn-blank text-white"
-          onClick={() => dispatch(logoutAction())}
+          onClick={clickLogout}
         >
           Cerrar Sesión
         </button>

@@ -16,6 +16,7 @@ import {
   UPDATE_TASK_SUCCESS,
   RESET_ACTUAL_TASK,
   RESET_FORM_TASK,
+  LOGOUT_TASK,
 } from '../types';
 
 const initialState = {
@@ -108,6 +109,16 @@ const taskReducer = (state = initialState, action) => {
     case RESET_FORM_TASK:
       return {
         ...state,
+        errorFormTask: false,
+      };
+
+    case LOGOUT_TASK:
+      return {
+        ...state,
+        loading: false,
+        tasksProject: [],
+        activeTask: null,
+        errorTask: false,
         errorFormTask: false,
       };
 

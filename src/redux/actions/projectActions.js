@@ -12,6 +12,7 @@ import {
   DELETE_PROJECT,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_ERROR,
+  LOGOUT_PROJECT,
 } from '../types';
 
 export const showFormAction = () => ({
@@ -126,3 +127,8 @@ export const deleteProjectAction = idProject => {
     }
   };
 };
+
+// logout project
+export const logoutProject = () => ({
+  type: LOGOUT_PROJECT,
+});
