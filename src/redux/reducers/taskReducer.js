@@ -10,7 +10,6 @@ import {
   DELETE_TASK,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_ERROR,
-  CHANGE_STATE_TASK,
   ACTUAL_TASK,
   UPDATE_TASK,
   UPDATE_TASK_ERROR,
@@ -20,17 +19,6 @@ import {
 } from '../types';
 
 const initialState = {
-  tasks: [
-    { projectId: 1, id: 1, name: 'Elegir Plataforma', state: true },
-    { projectId: 1, id: 2, name: 'Elegir Desarrollo', state: true },
-    { projectId: 1, id: 3, name: 'Elegir Plataforma', state: true },
-    { projectId: 1, id: 4, name: 'Elegir Colores', state: false },
-    { projectId: 2, id: 5, name: 'Elegir Colores', state: false },
-    { projectId: 2, id: 6, name: 'Elegir Desarrollo', state: true },
-    { projectId: 3, id: 7, name: 'Elegir Plataforma', state: true },
-    { projectId: 3, id: 8, name: 'Elegir Colores', state: false },
-    { projectId: 3, id: 9, name: 'Elegir Desarrollo', state: true },
-  ],
   loading: false,
   tasksProject: [],
   activeTask: null,
@@ -54,31 +42,31 @@ const taskReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tasksProject: state.tasks.filter(
-          task => task.projectId === action.payload,
-        ),
+        tasksProject: action.payload,
       };
 
     case ADD_TASK_SUCCESS:
       return {
         ...state,
         loading: false,
-        tasks: [...state.tasks, action.payload],
+        tasksProject: [...state.tasksProject, action.payload],
       };
 
     case DELETE_TASK_SUCCESS:
       return {
         ...state,
         loading: false,
-        tasks: state.tasks.filter(task => task.id !== action.payload),
+        tasksProject: state.tasksProject.filter(
+          task => task._id !== action.payload,
+        ),
       };
 
     case UPDATE_TASK_SUCCESS:
       return {
         ...state,
         loading: false,
-        tasks: state.tasks.map(task =>
-          task.id !== action.payload.id ? task : action.payload,
+        tasksProject: state.tasksProject.map(task =>
+          task._id !== action.payload._id ? task : action.payload,
         ),
       };
 
@@ -102,14 +90,6 @@ const taskReducer = (state = initialState, action) => {
       return {
         ...state,
         tasksProject: action.payload,
-      };
-
-    case CHANGE_STATE_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.map(task =>
-          task.id === action.payload.id ? action.payload : task,
-        ),
       };
 
     case ACTUAL_TASK:

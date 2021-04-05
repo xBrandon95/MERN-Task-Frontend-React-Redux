@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import shortid from 'shortid';
-
+import clientAxios from '../../config/axios';
 import {
   GET_TASKS,
   GET_TASKS_SUCCESS,
@@ -13,7 +11,6 @@ import {
   DELETE_TASK,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_ERROR,
-  CHANGE_STATE_TASK,
   ACTUAL_TASK,
   UPDATE_TASK,
   UPDATE_TASK_SUCCESS,
@@ -27,7 +24,7 @@ const getTasks = () => ({
   type: GET_TASKS,
 });
 
-const getTasksSuccess = projectId => ({
+export const getTasksSuccess = projectId => ({
   type: GET_TASKS_SUCCESS,
   payload: projectId,
 });
@@ -37,12 +34,12 @@ const getTasksError = () => ({
   payload: true,
 });
 
-export const getAllTasksAction = projectId => {
-  return dispatch => {
+export const getAllTasksAction = project => {
+  return async dispatch => {
     dispatch(getTasks());
-
     try {
-      dispatch(getTasksSuccess(projectId));
+      const res = await clientAxios.get('/api/tasks', { params: { project } });
+      dispatch(getTasksSuccess(res.data));
     } catch (error) {
       console.log(error);
       dispatch(getTasksError());
@@ -65,15 +62,14 @@ const addTaskError = () => ({
 });
 
 export const addTasksAction = task => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(addTask());
-
-    const newTask = { id: shortid.generate(), ...task };
     try {
-      dispatch(addTaskSuccess(newTask));
-      dispatch(getAllTasksAction(newTask.projectId));
+      const res = await clientAxios.post('/api/tasks', task);
+      dispatch(addTaskSuccess(res.data.task));
+      dispatch(getAllTasksAction(res.data.task.project));
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
       dispatch(addTaskError());
     }
   };
@@ -105,14 +101,18 @@ const deleteTaskError = () => ({
   payload: true,
 });
 
-export const deleteTaskAction = taskId => {
-  return dispatch => {
+export const deleteTaskAction = (taskId, projectId) => {
+  return async dispatch => {
     dispatch(deleteTask());
     try {
+      await clientAxios.delete(`/api/tasks/${taskId}`, {
+        params: { project: projectId },
+      });
       dispatch(deleteTaskSuccess(taskId));
+      dispatch(getAllTasksAction(projectId));
     } catch (error) {
-      dispatch(deleteTaskError());
       console.log(error);
+      dispatch(deleteTaskError());
     }
   };
 };
@@ -133,24 +133,16 @@ const updateTaskError = () => ({
 });
 
 export const updateTasksAction = task => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(updateTask());
-
     try {
-      dispatch(updateTaskSuccess(task));
-      dispatch(getAllTasksAction(task.projectId));
+      const res = await clientAxios.put(`/api/tasks/${task._id}`, task);
+      dispatch(updateTaskSuccess(res.data.task));
     } catch (error) {
-      console.log(error);
       dispatch(updateTaskError());
     }
   };
 };
-
-// change state task
-export const changeStateTaskAction = task => ({
-  type: CHANGE_STATE_TASK,
-  payload: task,
-});
 
 // actual task
 export const taskActualAction = task => ({

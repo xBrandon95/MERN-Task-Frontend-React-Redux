@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  changeStateTaskAction,
   deleteTaskAction,
-  getAllTasksAction,
   taskActualAction,
+  updateTasksAction,
 } from '../../redux/actions/taskActions';
 
 const TaskItem = ({ task }) => {
@@ -12,16 +11,19 @@ const TaskItem = ({ task }) => {
   const { activeProject } = useSelector(state => state.projects);
 
   // Delete Task and Update Tasks
-  const clickDeleteTask = taskId => {
-    dispatch(deleteTaskAction(taskId));
-    dispatch(getAllTasksAction(activeProject.id));
+  const clickDeleteTask = async taskId => {
+    await dispatch(deleteTaskAction(taskId, activeProject._id));
   };
 
   // Function change state task
   const clickChangeState = taskChange => {
     // eslint-disable-next-line no-param-reassign
     taskChange.state = !taskChange.state;
-    dispatch(changeStateTaskAction(taskChange));
+    dispatch(updateTasksAction(taskChange));
+  };
+
+  const clickEditTask = taskEdit => {
+    dispatch(taskActualAction(taskEdit));
   };
 
   return (
@@ -52,14 +54,14 @@ const TaskItem = ({ task }) => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => dispatch(taskActualAction(task))}
+          onClick={() => clickEditTask(task)}
         >
           Editar
         </button>
         <button
           type="button"
           className="btn btn-secondary"
-          onClick={() => clickDeleteTask(task.id)}
+          onClick={() => clickDeleteTask(task._id)}
         >
           Eliminar
         </button>

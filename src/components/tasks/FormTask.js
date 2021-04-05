@@ -46,11 +46,11 @@ const FormTask = () => {
     // Edit or Add Task
     if (activeTask === null) {
       // new task
-      const newTask = { ...task, projectId: activeProject.id };
+      const newTask = { ...task, project: activeProject._id };
       // add task
       dispatch(addTasksAction(newTask));
     } else {
-      dispatch(updateTasksAction({ ...task, projectId: activeProject.id }));
+      dispatch(updateTasksAction({ ...task, project: activeProject._id }));
       dispatch(resetActualTaskAction());
     }
 

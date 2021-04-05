@@ -78,7 +78,7 @@ export const addProjectAction = project => {
     try {
       const res = await clientAxios.post('/api/projects', project);
       dispatch(addProjectSuccess(res.data));
-      dispatch(actualProjectAction(project));
+      dispatch(actualProjectAction(res.data));
     } catch (error) {
       const alert = {
         msg: 'Hubo un error',

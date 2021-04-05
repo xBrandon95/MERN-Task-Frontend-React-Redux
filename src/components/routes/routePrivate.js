@@ -15,16 +15,9 @@ const RoutePrivate = ({ component: Component, ...props }) => {
 
   return (
     <Route
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
-      // eslint-disable-next-line no-shadow
       render={props =>
-        !auth && !loading ? (
-          <Redirect to="/" />
-        ) : (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <Component {...props} />
-        )
+        !auth && !loading ? <Redirect to="/" /> : <Component {...props} />
       }
     />
   );
